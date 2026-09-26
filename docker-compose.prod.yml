@@ -1,0 +1,68 @@
+name: reportase-foto-prod
+
+services:
+  db:
+    image: postgres:16-alpine
+    restart: always
+    environment:
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_NAME}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USER} -d ${DB_NAME}"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+    networks:
+      - reportase_internal
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    restart: always
+    env_file:
+      - .env
+    environment:
+      GO_ENV: production
+      DB_HOST: db
+      APP_PORT: 8005
+      UPLOAD_DIR: /app/uploads
+    volumes:
+      - ./data/uploads:/app/uploads
+    ports:
+      - "127.0.0.1:8005:8005"
+    depends_on:
+      db:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://localhost:8005/health"]
+      interval: 15s
+      timeout: 3s
+      retries: 5
+    networks:
+      - reportase_internal
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+      args:
+        VITE_API_URL: /api
+    restart: always
+    ports:
+      - "127.0.0.1:3004:80"
+    depends_on:
+      backend:
+        condition: service_healthy
+    networks:
+      - reportase_internal
+
+volumes:
+  postgres_data:
+
+networks:
+  reportase_internal:
+    driver: bridge

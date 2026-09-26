@@ -1,0 +1,9 @@
+import { Aperture, ExternalLink, LayoutDashboard, LogOut, Newspaper, Plus } from "lucide-react";
+import { Link, NavLink, Outlet } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
+
+export default function AdminLayout() {
+  const { user, logout } = useAuth();
+  const navClass = ({ isActive }: { isActive: boolean }) => `flex items-center gap-3 rounded-xl px-4 py-3 text-sm font-medium transition ${isActive ? "bg-signal text-ink" : "text-paper/60 hover:bg-paper/5 hover:text-paper"}`;
+  return <div className="min-h-screen bg-paper text-ink lg:grid lg:grid-cols-[260px_1fr]"><aside className="bg-ink p-5 text-paper lg:sticky lg:top-0 lg:h-screen"><Link to="/" className="mb-10 flex items-center gap-3 px-2 font-display text-lg font-bold text-paper"><span className="grid h-10 w-10 place-items-center rounded-full bg-signal text-ink"><Aperture size={20} /></span> SDIT AR RAHMAH</Link><nav className="space-y-2"><NavLink end to="/admin" className={navClass}><LayoutDashboard size={18} /> Dashboard</NavLink><NavLink to="/admin/berita" className={navClass}><Newspaper size={18} /> Semua berita</NavLink><NavLink to="/admin/berita/baru" className={navClass}><Plus size={18} /> Tulis berita</NavLink></nav><div className="mt-10 border-t border-paper/10 pt-6 lg:absolute lg:bottom-6 lg:left-5 lg:right-5"><p className="px-3 text-xs text-paper/35">Masuk sebagai</p><p className="mt-1 truncate px-3 text-sm font-semibold text-paper">{user?.name}</p><div className="mt-4 grid grid-cols-2 gap-2"><Link to="/" className="flex items-center justify-center gap-2 rounded-lg bg-paper/5 p-3 text-xs text-paper/60 hover:text-paper"><ExternalLink size={14} /> Situs</Link><button onClick={logout} className="flex items-center justify-center gap-2 rounded-lg bg-paper/5 p-3 text-xs text-paper/60 hover:text-paper"><LogOut size={14} /> Keluar</button></div></div></aside><main className="min-w-0"><Outlet /></main></div>;
+}

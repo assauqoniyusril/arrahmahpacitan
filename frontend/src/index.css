@@ -1,0 +1,21 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Manrope:wght@500;600;700;800&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { margin: 0; min-width: 320px; font-family: Inter, ui-sans-serif, system-ui, sans-serif; background: #ffffff; color: #17132b; -webkit-font-smoothing: antialiased; }
+  button, input, textarea, select { font: inherit; }
+  button { cursor: pointer; }
+  img { display: block; }
+  ::selection { background: #6d4aff; color: white; }
+}
+
+@layer components {
+  .input { @apply w-full rounded-xl border border-violet-100 bg-white px-4 py-3.5 text-sm text-ink outline-none transition placeholder:text-slate-300 focus:border-signal focus:ring-4 focus:ring-signal/10; }
+  .section-kicker { @apply text-[11px] font-bold uppercase tracking-[.18em] text-signal; }
+  .section-title { @apply mt-3 font-display text-3xl font-semibold leading-tight tracking-[-.035em] text-ink md:text-4xl; }
+  .section-copy { @apply mx-auto mt-4 max-w-2xl text-sm leading-7 text-slate-500; }
+}
