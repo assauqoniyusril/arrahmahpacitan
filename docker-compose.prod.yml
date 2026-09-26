@@ -1,4 +1,4 @@
-name: reportase-foto-prod
+name: website-sdit-arrahmah
 
 services:
   db:
@@ -11,12 +11,12 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U ${DB_USER} -d ${DB_NAME}"]
+      test: [ "CMD-SHELL", "pg_isready -U ${DB_USER} -d ${DB_NAME}" ]
       interval: 10s
       timeout: 5s
       retries: 10
     networks:
-      - reportase_internal
+      - website_sdit_arrahmah_internal
 
   backend:
     build:
@@ -38,12 +38,12 @@ services:
       db:
         condition: service_healthy
     healthcheck:
-      test: ["CMD", "wget", "-qO-", "http://localhost:8005/health"]
+      test: [ "CMD", "wget", "-qO-", "http://localhost:8005/health" ]
       interval: 15s
       timeout: 3s
       retries: 5
     networks:
-      - reportase_internal
+      - website_sdit_arrahmah_internal
 
   frontend:
     build:
@@ -58,11 +58,11 @@ services:
       backend:
         condition: service_healthy
     networks:
-      - reportase_internal
+      - website_sdit_arrahmah_internal
 
 volumes:
   postgres_data:
 
 networks:
-  reportase_internal:
+  website_sdit_arrahmah_internal:
     driver: bridge
