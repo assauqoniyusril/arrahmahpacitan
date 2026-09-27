@@ -6,8 +6,8 @@ import { api, imageUrl } from "../lib/api";
 import type { News } from "../types";
 
 const fallbackImages = [
-  "https://images.unsplash.com/photo-1488459716781-31db52582fe9?auto=format&fit=crop&w=900&q=85",
-  "https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&w=900&q=85",
+  "https://whatsapp.com/channel/0029Vb8xaJJHbFVAdaxz2e0h/206?auto=format&fit=crop&w=900&q=85",
+  "https://whatsapp.com/channel/0029Vb8xaJJHbFVAdaxz2e0h/187?auto=format&fit=crop&w=900&q=85",
   "https://images.unsplash.com/photo-1506157786151-b8491531f063?auto=format&fit=crop&w=900&q=85",
   "https://images.unsplash.com/photo-1498623116890-37e912163d5d?auto=format&fit=crop&w=900&q=85",
   "https://images.unsplash.com/photo-1516979187457-637abb4f9353?auto=format&fit=crop&w=900&q=85",
