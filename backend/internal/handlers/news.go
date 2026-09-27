@@ -196,12 +196,7 @@ func (h *NewsHandler) Upload(c *gin.Context) {
 	filename := fmt.Sprintf("%d%s", time.Now().UnixNano(), ext)
 	destination := filepath.Join(h.uploadDir, filename)
 	if err := c.SaveUploadedFile(file, destination); err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{
-			"error":   "gagal menyimpan gambar",
-			"details": err.Error(),
-			"path":    destination,
-			"upload":  h.uploadDir,
-		})
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "gagal menyimpan gambar"})
 		return
 	}
 	c.JSON(http.StatusCreated, gin.H{"url": "/uploads/" + filename})
